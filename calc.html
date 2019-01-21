@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+
+
+<h1>hello there!! ...</h1>
+
+
+<table>
+	<tr>
+		<td><button type="button" id="one" onclick="clicknumber(1)">1</button></td>
+		<td><button type="button" id="two" onclick="clicknumber(2)">2</button></td>
+		<td><button type="button" id="three" onclick="clicknumber(3)">3</button></td>
+		<td><button type="button" id="add" onclick="selectoperator('add');">+</button></td>
+	</tr>
+	<tr>
+		<td><button type="button" id="four" onclick="clicknumber(4)">4</button></td>
+		<td><button type="button" id="five" onclick="clicknumber(5)">5</button></td>
+		<td><button type="button" id="six" onclick="clicknumber(6)">6</button></td>
+		<td><button type="button" id="sub" onclick="selectoperator('sub');">-</button></td>
+	</tr>
+	<tr>
+		<td><button type="button" id="seven" onclick="clicknumber(7)">7</button></td>
+		<td><button type="button" id="eight" onclick="clicknumber(8)">8</button></td>
+		<td><button type="button" id="nine" onclick="clicknumber(9)">9</button></td>
+		<td><button type="button" id="mult" onclick="selectoperator('mult');">*</button></td>
+
+	</tr>
+	<tr>
+		<td><button type="button" id="equals" onclick="equals()">=</button></td>
+		<td><button type="button" id="zero">0</button></td>
+		<td><button type="button" id="clear" onclick="cleer()">C</button></td>
+		<td><button type="button" id="mult" onclick="selectoperator('div');">/</button></td>
+	</tr>
+
+	<p><input type="text" size=10 id="display" value=0></p>
+</table>
+
+<script type="text/javascript">
+	var total = null;
+	var calctype = "plus";
+	var lastop = "add";
+	var cleardisplay = 1;
+
+	var nextoperator = 0;
+	var last = 0;
+	var buffer = 0;
+</script>
+
+<script type="text/javascript">
+	function saveoperator(operator)
+	{
+		lastop = operator;
+		return;
+	}
+
+	function clicknumber(value)
+	{
+		nextoperator = 1;
+		if (cleardisplay == 1)
+		{
+			updatedisplay(null);
+			cleardisplay = 0;
+		}
+		newvalue = document.getElementById("display").value * 10 + value;
+		updatedisplay(newvalue);
+		return;
+	}
+
+	function updatedisplay(value)
+	{
+		document.getElementById("display").value = value;
+		return;
+	}
+
+	function savebuffer()
+	{
+		buffer = Number(document.getElementById("display").value);
+		return;
+	}
+
+	function selectoperator(operator)
+	{
+		if (nextoperator == 0)
+		{
+			return;
+		}
+		nextoperator = 0;
+
+		savebuffer();
+		if ( total == null )
+		{
+			total = buffer;
+			updatedisplay(total);
+		}
+		else
+		{
+			updatedisplay(compute(lastop)); 
+		}
+		saveoperator(operator);
+		cleardisplay = 1;
+
+		return;
+	}
+
+	function cleer()
+	{
+		total = null;
+		updatedisplay(total);
+	}
+
+	function equals()
+	{
+		nextoperator = 0;
+		savebuffer();
+		updatedisplay(compute(lastop)); 
+		saveoperator("none");
+		total = null;
+		cleardisplay = 1;
+		return;
+	}
+
+	function compute(type)
+	{
+		nextoperator = 0;
+		if (type == "add")
+		{
+			total = total + buffer;
+		}
+		if (type == "sub")
+		{
+			total = total - buffer;
+		}
+		if (type == "mult")
+		{
+			total = total * buffer;
+		}
+		if (type == "div")
+		{
+			total = total / buffer;
+		}
+
+		return total;
+	}
+
+</script>
+
+</body>
+
+
+</html>
