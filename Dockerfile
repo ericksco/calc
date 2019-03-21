@@ -4,7 +4,7 @@ ARG build_date
 
 LABEL name="CentOS Custom Image" \
     vendor="CentOS" \
-    build-date="2019032100 \
+    build-date="2019032100" \
     maintainer="ericksco74@gmail.com"
 
 EXPOSE 80
